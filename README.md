@@ -5,3 +5,7 @@ You're a begginer student in Univás college and your mission is to eliminate th
 
 <h3>Description:</h3>
 Use the mouse buttom to shoot the aliens. If you leave 20 aliens escape, the UNIVAS will be dominated and you lose the game.
+
+<h3>References:</h3>
+The Univaders project is based in the project "Shoot The Duck".
+The page of the project: http://www.gametutorial.net/java-games
