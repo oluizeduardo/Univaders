@@ -9,7 +9,7 @@ Use the mouse buttom to shoot the aliens. If you leave 20 aliens escape, the UNI
 
 <h3>Technical Description:</h3>
 The Univaders project is a game developed with the Java programming language in its version 8.
-It uses methods from Graphic2D class to draw images no the screen, also uses Threads to play sounds in the background.
+It uses methods from Graphic2D class to draw images on the screen, also uses Threads to play sounds in the background.
 <p>
 
 <h3>References:</h3>
