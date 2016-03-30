@@ -45,6 +45,11 @@ public class Window extends JFrame{
         this.setContentPane(new Framework());
         
         this.setVisible(true);
+        
+        // Yeah! It's about two hours playng the sound of background =)
+        PlayWAVFile pf = new PlayWAVFile(PlayWAVFile.INTRO_WARRIOR, 120);
+        Thread t = new Thread(pf);
+        t.start();
     }
 
     

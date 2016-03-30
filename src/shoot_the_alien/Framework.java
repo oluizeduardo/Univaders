@@ -72,9 +72,6 @@ public class Framework extends Canvas {
      * Current state of the game.
      */
     public static GameState gameState;
-    
-        
-    
     /**
      * Elapsed game time in nanoseconds.
      */
@@ -91,7 +88,10 @@ public class Framework extends Canvas {
      * Background image of the main menu.
      */
     private BufferedImage background_main_menu;    
-    
+    /**
+     * A flag to control the execution of the GameOver sound.
+     */
+    private boolean playedTheGameOverSound = false;
     
     
     
@@ -119,7 +119,8 @@ public class Framework extends Canvas {
     }
     
     
-
+ 
+    
     
     /**
      * Load content - images, sounds, ...
@@ -127,7 +128,9 @@ public class Framework extends Canvas {
      * files for the actual game can be loaded in Game.java.
      */
     private void LoadContent()
-    {
+    {  	
+    	
+    	// Load the inicial image background.
         try
         {
             URL backgroundMenuImg = this.getClass().getResource("/shoot_the_alien/resources/images/background_menu.png");
@@ -165,6 +168,27 @@ public class Framework extends Canvas {
             
             switch (gameState)
             {
+	            case VISUALIZING:
+	            	
+	                // On Ubuntu OS (when I tested on my old computer) this.getWidth() method doesn't return the correct value 
+	            	// immediately (eg. for frame that should be 800px width, returns 0 than 790 and at last 798px). 
+	                // So we wait one second for the window/frame to be set to its correct size. Just in case we
+	                // also insert 'this.getWidth() > 1' condition in case when the window/frame size wasn't set in time,
+	                // so that we although get approximately size.
+	                if(this.getWidth() > 1 && visualizingTime > secInNanosec)
+	                {                    	
+	                    frameWidth = this.getWidth();
+	                    frameHeight = this.getHeight();
+	
+	                    // When we get size of frame we change status.
+	                    gameState = GameState.STARTING;
+	                }
+	                else
+	                {
+	                    visualizingTime += System.nanoTime() - lastVisualizingTime;
+	                    lastVisualizingTime = System.nanoTime();
+	                }	                
+	            break;
                 case PLAYING:
                     gameTime += System.nanoTime() - lastTime;
                     
@@ -173,7 +197,16 @@ public class Framework extends Canvas {
                     lastTime = System.nanoTime();
                 break;
                 case GAMEOVER:
-                	//...
+                	
+                	if(!playedTheGameOverSound){
+                		// Play the sound of the Game Over.
+                    	PlayWAVFile pf = new PlayWAVFile(PlayWAVFile.GAME_OVER, 2);
+                    	Thread t = new Thread(pf);
+                        t.start();
+                        
+                        playedTheGameOverSound = true;
+                	}
+                	
                 break;
                 case RESTART:
                 	this.restartGame();
@@ -181,7 +214,7 @@ public class Framework extends Canvas {
                 case GAME_CONTENT_LOADING:
                 	// Wait a time before start the game.
 					try {
-						Thread.sleep(600);
+						Thread.sleep(1500);
 					} catch (InterruptedException e) { }
                 break;
                 case STARTING: 
@@ -192,27 +225,11 @@ public class Framework extends Canvas {
                     // we change game status to main menu.
                     gameState = GameState.MAIN_MENU;
                 break;
-                case VISUALIZING:
-                	
-                    // On Ubuntu OS (when I tested on my old computer) this.getWidth() method doesn't return the correct value 
-                	// immediately (eg. for frame that should be 800px width, returns 0 than 790 and at last 798px). 
-                    // So we wait one second for the window/frame to be set to its correct size. Just in case we
-                    // also insert 'this.getWidth() > 1' condition in case when the window/frame size wasn't set in time,
-                    // so that we although get approximately size.
-                    if(this.getWidth() > 1 && visualizingTime > secInNanosec)
-                    {                    	
-                        frameWidth = this.getWidth();
-                        frameHeight = this.getHeight();
-
-                        // When we get size of frame we change status.
-                        gameState = GameState.STARTING;
-                    }
-                    else
-                    {
-                        visualizingTime += System.nanoTime() - lastVisualizingTime;
-                        lastVisualizingTime = System.nanoTime();
-                    }
+                case MAIN_MENU:
+                	// Restart this flag to can play the sound again.
+                	playedTheGameOverSound = false;
                 break;
+                
             }
             
             // Repaint the screen.
@@ -268,6 +285,7 @@ public class Framework extends Canvas {
                 g2d.setColor(Color.white);
                 g2d.setFont(new Font("Lucida Sans", Font.BOLD, 25));
                 g2d.drawString("SISTEMAS DE INFORMAÇÃO - UNIVÁS - 2016", 10, frameHeight - 10);
+                
             break;
             case OPTIONS:
                 //...
@@ -337,7 +355,7 @@ public class Framework extends Canvas {
         }
         catch (Exception e)
         {
-            mp = new Point(0, 0);
+            mp = new Point(100, 100);
         }
         return mp;
     }

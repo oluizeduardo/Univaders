@@ -81,7 +81,7 @@ public class Game {
     /**
      * Alien image.
      */
-    private BufferedImage alienImg, alienDead;   
+    private BufferedImage alienImg;   
     /**
      * Shotgun sight image.
      */
@@ -94,14 +94,13 @@ public class Game {
      * There is any alien dead?
      */
     private boolean hasAlienDead = false;
-    /**Position X of the alien dead.*/
-    private int alienDead_x = 0;
-    /**Position Y of the alien dead.*/
-    private int alienDead_y = 0;
     
     
 
     
+    /**
+     * The constructor of the class.
+     */
     public Game()
     {
         Framework.gameState = Framework.GameState.GAME_CONTENT_LOADING;
@@ -160,9 +159,6 @@ public class Game {
             
             URL alienImgUrl = this.getClass().getResource(url+"alien.png");
             alienImg = ImageIO.read(alienImgUrl);
-
-            URL alienDeadUrl = this.getClass().getResource(url+"blood.png");//
-            alienDead = ImageIO.read(alienDeadUrl);
             
             URL sightImgUrl = this.getClass().getResource(url+"sight.png");
             sightImg = ImageIO.read(sightImgUrl);
@@ -193,7 +189,6 @@ public class Game {
         killedAliens = 0;
         score = 0;
         shoots = 0;
-        alienDead = null;
         lastTimeShoot = 0;
     }
     
@@ -214,7 +209,7 @@ public class Game {
         {
         	
         	int x 	  = Alien.alienLines[Alien.nextAlienLines][0] + random.nextInt(200);// demora um pouco mais para aparecer.
-        	int y 	  = Alien.alienLines[Alien.nextAlienLines][1];
+        	int y 	  = Alien.alienLines[Alien.nextAlienLines][1] ;
         	int speed = Alien.alienLines[Alien.nextAlienLines][2];
         	int score = Alien.alienLines[Alien.nextAlienLines][3];
         	
@@ -261,9 +256,10 @@ public class Game {
                 	
                 	int x = aliens.get(i).x;
                 	int y = aliens.get(i).y;
-                	int larg = 128;
-                	int altu = 128;
+                	int larg = 100;
+                	int altu = 100;
                 	Rectangle rec = new Rectangle(x, y, larg, altu);
+                
                 	
                 	// We check, if the mouse was over the aliens body, when player has shot.
                 	if(rec.contains(mousePosition)){
@@ -271,13 +267,10 @@ public class Game {
                         killedAliens++;
                         score += aliens.get(i).score;
                         
+                        //Controls the execution of the sound of alien dead.
                         this.hasAlienDead = true;
                         
-                        // Get the alien position.
-                        this.alienDead_x= aliens.get(i).x;
-                        this.alienDead_y = aliens.get(i).y;
-                        
-                        // Remove the aliens from the array list.
+                        // Remove the alien from the array list.
                         aliens.remove(i);
                         
                         // We found the alien that player shoot, so we can leave the for loop.
@@ -333,8 +326,13 @@ public class Game {
         
         
         if(hasAlienDead){
-        	// Draw the blood of the alien dead.
-            g2d.drawImage(alienDead, alienDead_x, alienDead_y, 70, 70, null);            
+        	
+        	// Play the sound of shoot.
+        	PlayWAVFile pf = new PlayWAVFile(PlayWAVFile.SHOOT_LASER, 1);
+        	Thread t = new Thread(pf);
+            t.start();
+
+            hasAlienDead = false;
         }
         
     }
