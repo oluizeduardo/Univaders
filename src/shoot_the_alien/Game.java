@@ -79,9 +79,9 @@ public class Game {
      */
     private BufferedImage univas_rodape_Img;  
     /**
-     * Alien image.
+     * Alien images.
      */
-    private BufferedImage alienImg;   
+    private BufferedImage alienImg_1, alienImg_2;   
     /**
      * Shotgun sight image.
      */
@@ -157,8 +157,11 @@ public class Game {
             URL univas_rodape_ImgUrl = this.getClass().getResource(url+"logo_base.png");
             univas_rodape_Img = ImageIO.read(univas_rodape_ImgUrl);
             
-            URL alienImgUrl = this.getClass().getResource(url+"alien.png");
-            alienImg = ImageIO.read(alienImgUrl);
+            URL alienImgUrl_1 = this.getClass().getResource(url+"alien1.png");
+            alienImg_1 = ImageIO.read(alienImgUrl_1);
+            
+            URL alienImgUrl_2 = this.getClass().getResource(url+"alien2.png");
+            alienImg_2 = ImageIO.read(alienImgUrl_2);
             
             URL sightImgUrl = this.getClass().getResource(url+"sight.png");
             sightImg = ImageIO.read(sightImgUrl);
@@ -213,8 +216,19 @@ public class Game {
         	int speed = Alien.alienLines[Alien.nextAlienLines][2];
         	int score = Alien.alienLines[Alien.nextAlienLines][3];
         	
-        	// Here we create new duck and add it to the array list.
-        	Alien newAlien = new Alien(x, y, speed, score, alienImg);
+        	// Prepare a new objet Alien.
+        	Alien newAlien = null;
+        	
+        	// Random a number.
+        	int random = new Random().nextInt(10);
+        	
+        	// Check if the selected number is even or odd.
+        	if((random % 2) == 0)
+        		newAlien = new Alien(x, y, speed, score, alienImg_1);
+        	else
+        		newAlien = new Alien(x, y, speed*2, score*2, alienImg_2);
+        	
+        	// After created a new alien, must add it to the array list.
         	aliens.add(newAlien);
         	
             
@@ -235,7 +249,7 @@ public class Game {
             aliens.get(i).Update();
             
             // Checks if the duck leaves the screen and remove it if it does.
-            if(aliens.get(i).x < 0 - alienImg.getWidth())
+            if(aliens.get(i).x < 0 - alienImg_1.getWidth())
             {
                 aliens.remove(i);
                 runawayAliens++;

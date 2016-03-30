@@ -15,7 +15,10 @@ import javax.sound.sampled.Clip;
  */
 public class PlayWAVFile implements Runnable {
 
-	
+	// When is developing the game, use this type of adress:
+	//public static final String INTRO_WARRIOR = "src/shoot_the_alien/resources/audio/intro_warrior.wav";
+	// When building the .jar file, after that, change the address for this format:
+	//public static final String INTRO_WARRIOR = "audio/intro_warrior.wav";
 	public static final String INTRO_WARRIOR = "src/shoot_the_alien/resources/audio/intro_warrior.wav";
 	public static final String SHOOT_LASER = "src/shoot_the_alien/resources/audio/shoot_laser.wav";
 	public static final String GAME_OVER = "src/shoot_the_alien/resources/audio/game_over.wav";

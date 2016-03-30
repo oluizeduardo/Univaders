@@ -9,9 +9,9 @@ public class Sound implements Runnable {
 
 	
 	
-	public static final String INTRO = "/shoot_the_alien/resources/audio/into_warrior.mid";
+	public static final String INTRO = "audios/into_warrior.mid";
 	
-	public static final String SHOOT = "/shoot_the_alien/resources/audio/shoot-laser.mid";
+	public static final String SHOOT = "audios/shoot-laser.mid";
 	
 	
 	

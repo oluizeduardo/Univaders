@@ -2,7 +2,6 @@ package shoot_the_alien;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 
 /**
