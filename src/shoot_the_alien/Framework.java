@@ -130,7 +130,7 @@ public class Framework extends Canvas {
     private void LoadContent()
     {  	
     	
-    	// Load the inicial image background.
+    	// Load the initial image background.
         try
         {
             URL backgroundMenuImg = this.getClass().getResource("/shoot_the_alien/resources/images/background_menu.png");
@@ -355,7 +355,7 @@ public class Framework extends Canvas {
         }
         catch (Exception e)
         {
-            mp = new Point(100, 100);
+            mp = new Point(300, 300);
         }
         return mp;
     }

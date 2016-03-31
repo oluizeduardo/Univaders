@@ -37,8 +37,9 @@ public class Alien {
                                        {Framework.frameWidth, (int)(Framework.frameHeight * 0.78), -5, 50}
                                       };
     
-    
-   /* public static int[][] alienLines = {
+   
+    /*
+    public static int[][] alienLines = {
             {(int)(Framework.frameWidth * 0.05), 0, -5, 90},
             {(int)(Framework.frameWidth * 0.25), 0, -3, 30},
             {(int)(Framework.frameWidth * 0.58), 0, -3, 10},

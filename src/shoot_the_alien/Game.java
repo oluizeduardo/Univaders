@@ -188,10 +188,10 @@ public class Game {
         // We set last alien time to zero.
         Alien.lastAlienTime = 0;
         
-        runawayAliens = 0;
-        killedAliens = 0;
         score = 0;
         shoots = 0;
+        runawayAliens = 0;
+        killedAliens = 0;
         lastTimeShoot = 0;
     }
     
@@ -226,7 +226,7 @@ public class Game {
         	if((random % 2) == 0)
         		newAlien = new Alien(x, y, speed, score, alienImg_1);
         	else
-        		newAlien = new Alien(x, y, speed*2, score*2, alienImg_2);
+        		newAlien = new Alien(x, y, speed * 2, score * 2, alienImg_2);
         	
         	// After created a new alien, must add it to the array list.
         	aliens.add(newAlien);
@@ -366,8 +366,9 @@ public class Game {
         g2d.drawImage(red_borderImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
         
         g2d.setColor(Color.red);
-        g2d.drawString("Game Over!!!", Framework.frameWidth / 2 - 50, (int)(Framework.frameHeight / 2)-15);
-        g2d.drawString("Pressione ESPAÇO ou ENTER para continuar", Framework.frameWidth / 2 - 300, (int)(Framework.frameHeight /2) + 25);
+        g2d.drawString("Game Over!!!", Framework.frameWidth / 2 - 50, (int)(Framework.frameHeight / 2)-40);
+        g2d.drawString("Pontuação final: "+score, Framework.frameWidth / 2 - 140, (int)(Framework.frameHeight / 2));
+        g2d.drawString("Pressione ESPAÇO ou ENTER para continuar", Framework.frameWidth / 2 - 300, (int)(Framework.frameHeight /2) + 50);
     }
     
     
