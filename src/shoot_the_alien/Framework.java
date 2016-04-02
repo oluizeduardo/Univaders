@@ -93,6 +93,8 @@ public class Framework extends Canvas {
      */
     private boolean playedTheGameOverSound = false;
     
+
+    
     
     
     
@@ -190,6 +192,7 @@ public class Framework extends Canvas {
 	                }	                
 	            break;
                 case PLAYING:
+
                     gameTime += System.nanoTime() - lastTime;
                     
                     game.UpdateGame(gameTime, mousePosition());
@@ -199,6 +202,10 @@ public class Framework extends Canvas {
                 case GAMEOVER:
                 	
                 	if(!playedTheGameOverSound){
+                		
+                		// Stop the timewatch.
+                		Stopwatch.isStopwatchRunning = false;
+                		
                 		// Play the sound of the Game Over.
                     	PlayWAVFile pf = new PlayWAVFile(PlayWAVFile.GAME_OVER, 2);
                     	Thread t = new Thread(pf);
@@ -212,10 +219,20 @@ public class Framework extends Canvas {
                 	this.restartGame();
                 break;
                 case GAME_CONTENT_LOADING:
+                	
+                	
                 	// Wait a time before start the game.
-					try {
+                	try {
 						Thread.sleep(1500);
-					} catch (InterruptedException e) { }
+					} catch (InterruptedException e) { }	
+                	
+                	try{
+	                	if(!Framework.th_stopwatch.isAlive())
+	                		Framework.th_stopwatch.start();
+                	}catch (IllegalThreadStateException e) { }
+
+                	Stopwatch.isStopwatchRunning = true;
+                	
                 break;
                 case STARTING: 
                     // Load files - images, sounds, ...
@@ -326,6 +343,8 @@ public class Framework extends Canvas {
      */
     private void restartGame()
     {
+    	Stopwatch.restart();  	
+    	
         // We set gameTime to zero and lastTime to current time for later calculations.
         gameTime = 0;
         lastTime = System.nanoTime();

@@ -96,6 +96,9 @@ public class Game {
     private boolean hasAlienDead = false;
     
     
+    
+    
+    
 
     
     /**
@@ -125,7 +128,8 @@ public class Game {
      */
     private void Initialize()
     {
-        random = new Random();        
+        random = new Random();
+        
         font = new Font("monospaced", Font.BOLD, 25);
         
         aliens = new ArrayList<Alien>();
@@ -314,7 +318,7 @@ public class Game {
      * @param mousePosition current mouse position.
      */
     public void Draw(Graphics2D g2d, Point mousePosition)
-    {
+    {    	
     	// Draw the background image.
         g2d.drawImage(backgroundImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
         
@@ -341,11 +345,10 @@ public class Game {
         
         if(hasAlienDead){
         	
-        	// Play the sound of shoot.
         	PlayWAVFile pf = new PlayWAVFile(PlayWAVFile.SHOOT_LASER, 1);
         	Thread t = new Thread(pf);
             t.start();
-
+        	
             hasAlienDead = false;
         }
         

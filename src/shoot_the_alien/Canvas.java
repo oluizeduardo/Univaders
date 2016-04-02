@@ -34,7 +34,18 @@ public abstract class Canvas extends JPanel implements MouseListener {
 	/** Mouse states - Here are stored states for mouse keys - is it down or not.  */
     private static boolean[] mouseState = new boolean[3];
         
-        
+    /**
+     * The stopwatch of the game.
+     */
+    private Stopwatch stopWatch = null;
+    /**
+     * An object Thread to work the stopwatch of the game.
+     */
+    public static Thread th_stopwatch = null;
+    
+    
+    
+    
     
     
     
@@ -43,11 +54,17 @@ public abstract class Canvas extends JPanel implements MouseListener {
      */
     public Canvas()
     {
+    	this.stopWatch = new Stopwatch();
+    	
         // We use double buffer to draw on the screen.
         this.setDoubleBuffered(true);
         this.setFocusable(true);
         this.setBackground(Color.black);
-
+        this.add(stopWatch);
+        
+        // Start the Thread of the stopwatch.
+        th_stopwatch = new Thread(stopWatch);
+        
         BufferedImage blankCursorImg = new BufferedImage(20, 20, BufferedImage.TYPE_INT_ARGB);
         Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(blankCursorImg, new Point(0, 0), null);
         this.setCursor(blankCursor);
@@ -177,8 +194,7 @@ public abstract class Canvas extends JPanel implements MouseListener {
         mouseKeyStatus(e, false);
     }
     
-    
-    
+
     
     
     @Override
